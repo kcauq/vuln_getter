@@ -38,7 +38,8 @@ public class WebSecurityConfiguration{
                         .authenticated()
                 )
                 .formLogin()
-                .loginPage("/login").permitAll();
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/home", true);
 
 //                .httpBasic();
 
