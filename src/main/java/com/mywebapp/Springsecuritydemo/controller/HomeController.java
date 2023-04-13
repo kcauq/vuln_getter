@@ -4,12 +4,11 @@ import com.mywebapp.Springsecuritydemo.CustomUserDetailsService;
 import com.mywebapp.Springsecuritydemo.User;
 import com.mywebapp.Springsecuritydemo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -21,6 +20,11 @@ public class HomeController {
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
+    private BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
     private UserRepository userRepository;
 
     @ModelAttribute
@@ -30,8 +34,8 @@ public class HomeController {
         User user = userRepository.findByUsername(name);
         System.out.println(user);
 
-        model.addAttribute("user",user)
-        //System.out.println(model.addAttribute("user",user));;
+        model.addAttribute("user",user);
+        //System.out.println(model.addAttribute("user",user));
     }
 
     @GetMapping("/home")
@@ -50,8 +54,22 @@ public class HomeController {
     }
 
     @PostMapping("/updatePassword")
-    public String changePasswordAction() {
-        return "fdf";
+    public String changePasswordAction(Principal principal, @RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass) {
+        String name = principal.getName();
+        User user = userRepository.findByUsername(name);
+
+        boolean ifOldPassMatches = passwordEncoder().matches(oldPass, user.getPassword());
+
+        if(ifOldPassMatches){
+//            user.setPassword(passwordEncoder().encode(newPass));
+//            User upd userRepository.save()
+            System.out.println("haslo zmienione");
+        }else {
+            System.out.println("zle stare haslo");
+        }
+
+
+        return "redirect:/changepass";
     }
 
 }
