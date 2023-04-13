@@ -26,6 +26,10 @@ public class WebSecurityConfiguration{
         return provider;
     }
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
