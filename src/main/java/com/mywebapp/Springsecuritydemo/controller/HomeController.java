@@ -3,6 +3,7 @@ package com.mywebapp.Springsecuritydemo.controller;
 import com.mywebapp.Springsecuritydemo.CustomUserDetailsService;
 import com.mywebapp.Springsecuritydemo.User;
 import com.mywebapp.Springsecuritydemo.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -54,20 +55,26 @@ public class HomeController {
     }
 
     @PostMapping("/updatePassword")
-    public String changePasswordAction(Principal principal, @RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass) {
+    public String changePasswordAction(Principal principal, @RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass, HttpSession session) {
         String name = principal.getName();
         User user = userRepository.findByUsername(name);
 
         boolean ifOldPassMatches = passwordEncoder().matches(oldPass, user.getPassword());
 
         if(ifOldPassMatches){
-//            user.setPassword(passwordEncoder().encode(newPass));
-//            User upd userRepository.save()
-            System.out.println("haslo zmienione");
-        }else {
-            System.out.println("zle stare haslo");
-        }
+            user.setPassword(passwordEncoder().encode(newPass));
+            User updatePassword = userRepository.save(user);
 
+            if(updatePassword!=null){
+                session.setAttribute("msg", "Haslo zmienione");
+            }else {
+                session.setAttribute("msg", "Cos poszlo nie tak");
+
+            }
+//            System.out.println("haslo zmienione");
+        }else {
+            session.setAttribute("msg", "Stare haslo nieprawidlowe");
+        }
 
         return "redirect:/changepass";
     }
