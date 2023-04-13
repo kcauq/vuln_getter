@@ -51,29 +51,30 @@ public class HomeController {
 
     @GetMapping("/changepass")
     public String changePasswordSite() {
+
         return "password";
     }
 
     @PostMapping("/updatePassword")
-    public String changePasswordAction(Principal principal, @RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass, HttpSession session) {
+    public String changePasswordAction(Principal principal, @RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass) {
+
         String name = principal.getName();
         User user = userRepository.findByUsername(name);
 
         boolean ifOldPassMatches = passwordEncoder().matches(oldPass, user.getPassword());
+
 
         if(ifOldPassMatches){
             user.setPassword(passwordEncoder().encode(newPass));
             User updatePassword = userRepository.save(user);
 
             if(updatePassword!=null){
-                session.setAttribute("msg", "Haslo zmienione");
+                System.out.println("haslo zmienione");
             }else {
-                session.setAttribute("msg", "Cos poszlo nie tak");
-
+                System.out.println("Cos poszlo nie tak");
             }
-//            System.out.println("haslo zmienione");
         }else {
-            session.setAttribute("msg", "Stare haslo nieprawidlowe");
+            System.out.println("Stare haslo nieprawidlowe");
         }
 
         return "redirect:/changepass";
