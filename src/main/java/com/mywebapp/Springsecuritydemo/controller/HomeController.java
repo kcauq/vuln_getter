@@ -15,6 +15,11 @@ public class HomeController {
     @GetMapping("/admin")
     public String admin() {
         return "admin";
+    }
 
+
+    @GetMapping("/changepass")
+    public String changePassword() {
+        return "password";
     }
 }
