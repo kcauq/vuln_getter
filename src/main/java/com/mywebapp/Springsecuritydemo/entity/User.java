@@ -1,4 +1,4 @@
-package com.mywebapp.Springsecuritydemo;
+package com.mywebapp.Springsecuritydemo.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

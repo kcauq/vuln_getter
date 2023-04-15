@@ -34,7 +34,7 @@ public class WebSecurityConfiguration{
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/").permitAll()
-                        .requestMatchers("/home").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/home", "/vulnerabilities").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/admin").hasAuthority("ADMIN")
                         .anyRequest()
                         .authenticated()
