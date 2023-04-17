@@ -1,5 +1,7 @@
 package com.mywebapp.Springsecuritydemo;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +15,7 @@ import java.net.http.HttpResponse;
 @Component
 public class JsonParser {
 
-    private static final String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=2023-04-15T00:00:00.000%2B01:00&lastModEndDate=2023-04-15T23:59:59.999%2B01:00";
+    private static final String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=2023-04-15T00:00:00.000%2B01:00&lastModEndDate=2023-04-15T02:30:00.000%2B01:00";
 
 
     public static void webCommunication () throws IOException, InterruptedException {
@@ -25,10 +27,21 @@ public class JsonParser {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println((response.body()));
+        //System.out.println((response.body()));
+        String nistJson = response.body();
+        JsonNode rootNode = new ObjectMapper().readTree(nistJson);
+        JsonNode vulnerabilityNode = rootNode.path("vulnerabilities");
+
+        
+
+
+        System.out.println(vulnerabilityNode);
+
 
     }
     
+    public void parseJson(){
 
+    }
 
 }
