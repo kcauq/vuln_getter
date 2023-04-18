@@ -3,6 +3,7 @@ package com.mywebapp.Springsecuritydemo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,7 @@ public class JsonParser {
     private static final String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=2023-04-15T00:00:00.000%2B01:00&lastModEndDate=2023-04-15T02:30:00.000%2B01:00";
 
 
-    public static void webCommunication () throws IOException, InterruptedException {
+    public void webCommunication () throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -47,11 +48,33 @@ public class JsonParser {
 
 
         ArrayNode arrayNode = (ArrayNode) objectMapper.readTree(vulnerabilityNodeToString);
+
+//        StringBuilder cveNodeBuilder = new StringBuilder();
+//        ObjectNode testNode = objectMapper.createObjectNode();
+        List<JsonNode> cveNodesList = new ArrayList<>();
+
         if(arrayNode.isArray()) {
             for(JsonNode jsonNode:arrayNode) {
-                System.out.println(jsonNode);
+//
+//                System.out.println(jsonNode);
+                cveNodesList.add(jsonNode);
             }
         }
+
+        System.out.println(cveNodesList.get(1));
+
+//        System.out.println(cveNodesList);
+
+//        String cveNodeString = cveNodeBuilder.toString();
+//        System.out.println(cveNodeString);
+
+
+//        JsonNode cveNode = objectMapper.readTree(cveNodesList);
+
+//        System.out.println(cveNode.toPrettyString());
+//
+//
+//        System.out.println(cveNode.toPrettyString());
 
 //        List<Vulnerability> v = new ArrayList<>(Vulnerability);
 
