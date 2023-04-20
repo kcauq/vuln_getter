@@ -71,6 +71,9 @@ public class JsonParser {
 
         JsonNode cveNodeTree;
         JsonNode idNode;
+        VulnerabilityModel vulnerabilityModel = new VulnerabilityModel();
+        List<JsonNode> idNodesList = new ArrayList<>();
+
 
         // "Enhanced for loop"
         for(JsonNode cveNode:cveNodesList) {
@@ -79,11 +82,31 @@ public class JsonParser {
             cveNodeTree = objectMapper.readTree(cveNodeString);
 //            System.out.println(cveNodeTree);
             idNode = cveNodeTree.path("cve");
+            idNodesList.add(idNode);
+//            String idNodeToString = idNode.toString();
             System.out.println(idNode.toPrettyString());
 
         }
 
+        String cveId = new String();
 
+
+        for (JsonNode x:idNodesList) {
+            cveId = x.get("id").toString();
+            System.out.println(cveId);
+            // TODO published Date
+            // TODO last Modified
+//            JsonNode xNode = objectMapper.readTree(x.toString());
+//            JsonNode descriptionNode = xNode.path("vulnerabilities");
+//            System.out.println(descriptionNode);
+
+
+
+//            ArrayNode descriptionArrayNode = (ArrayNode) objectMapper.readTree(cveId);
+
+
+
+        }
 
 
     }
