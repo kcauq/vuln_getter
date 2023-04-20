@@ -19,6 +19,7 @@ public class VulnController {
     @GetMapping("/vulnerabilities")
     public String vulnerabilities() throws IOException, InterruptedException {
         jsonParser.webCommunication();
+
         return "strona dziala";
     }
 }

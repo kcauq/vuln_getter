@@ -1,6 +1,7 @@
 package com.mywebapp.Springsecuritydemo;
 
 import com.mywebapp.Springsecuritydemo.entity.User;
+import com.mywebapp.Springsecuritydemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

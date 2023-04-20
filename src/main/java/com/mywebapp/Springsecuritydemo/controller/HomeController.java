@@ -2,7 +2,7 @@ package com.mywebapp.Springsecuritydemo.controller;
 
 import com.mywebapp.Springsecuritydemo.CustomUserDetailsService;
 import com.mywebapp.Springsecuritydemo.entity.User;
-import com.mywebapp.Springsecuritydemo.UserRepository;
+import com.mywebapp.Springsecuritydemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

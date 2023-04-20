@@ -1,4 +1,4 @@
-package com.mywebapp.Springsecuritydemo;
+package com.mywebapp.Springsecuritydemo.repository;
 
 import com.mywebapp.Springsecuritydemo.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

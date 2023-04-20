@@ -3,20 +3,17 @@ package com.mywebapp.Springsecuritydemo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
+import com.mywebapp.Springsecuritydemo.repository.VulnerabilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -26,7 +23,13 @@ public class JsonParser {
     @Autowired
     private Vulnerability vulnerability;
 
+    private static VulnerabilityRepository vulnerabilityRepository;
+
     private static final String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=2023-04-15T00:00:00.000%2B01:00&lastModEndDate=2023-04-15T02:30:00.000%2B01:00";
+
+    public JsonParser(VulnerabilityRepository vulnerabilityRepository) {
+        this.vulnerabilityRepository = vulnerabilityRepository;
+    }
 
 
     public static void webCommunication () throws IOException, InterruptedException {
@@ -75,7 +78,18 @@ public class JsonParser {
             System.out.println(idNode.toPrettyString());
 
         }
+        Vulnerability testVulnerability = new Vulnerability();
 
+//        Vulnerability testVulnerability = new Vulnerability(
+//                "q",
+//                "w",
+//                "e",
+//                "r",
+//                "t",
+//                "y",
+//                "u");
+        testVulnerability.setCveId("djsakdjsakd");
+        vulnerabilityRepository.save(testVulnerability);
 
     }
     
