@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
-import com.mywebapp.Springsecuritydemo.repository.VulnerabilityRepository;
+import com.mywebapp.Springsecuritydemo.service.VulnerabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,16 +20,19 @@ import java.util.List;
 @Component
 public class JsonParser {
 
-    @Autowired
-    private Vulnerability vulnerability;
+//    @Autowired
+//    private Vulnerability vulnerability;
 
-    private static VulnerabilityRepository vulnerabilityRepository;
+    @Autowired
+    private VulnerabilityService vulnerabilityService;
+
+//    private static VulnerabilityRepository vulnerabilityRepository;
 
     private static final String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=2023-04-15T00:00:00.000%2B01:00&lastModEndDate=2023-04-15T02:30:00.000%2B01:00";
 
-    public JsonParser(VulnerabilityRepository vulnerabilityRepository) {
-        this.vulnerabilityRepository = vulnerabilityRepository;
-    }
+//    public JsonParser(VulnerabilityRepository vulnerabilityRepository) {
+//        this.vulnerabilityRepository = vulnerabilityRepository;
+//    }
 
 
     public static void webCommunication () throws IOException, InterruptedException {
@@ -78,22 +81,20 @@ public class JsonParser {
             System.out.println(idNode.toPrettyString());
 
         }
-        Vulnerability testVulnerability = new Vulnerability();
 
-//        Vulnerability testVulnerability = new Vulnerability(
-//                "q",
-//                "w",
-//                "e",
-//                "r",
-//                "t",
-//                "y",
-//                "u");
-        testVulnerability.setCveId("djsakdjsakd");
-        vulnerabilityRepository.save(testVulnerability);
+        VulnerabilityModel vulnerabilityModel = new VulnerabilityModel();
+        vulnerabilityModel.setCveId("qq");
+        vulnerabilityModel.setPublishDate("11");
+        vulnerabilityModel.setLastModifiedDate("22");
+        vulnerabilityModel.setDescription("33");
+        vulnerabilityModel.setVectorString("fdfd");
+        vulnerabilityModel.setBaseScore("1");
+        vulnerabilityModel.setVulnerableTechnology("sdddd");
 
     }
     
-    public void parseJson(){
+    public void parseJson(VulnerabilityModel vulnerabilityModel){
+        Vulnerability vulnerability = vulnerabilityService.saveVulnerability(vulnerabilityModel);
 
     }
 
