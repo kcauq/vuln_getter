@@ -49,8 +49,6 @@ public class JsonParser {
 
         ArrayNode arrayNode = (ArrayNode) objectMapper.readTree(vulnerabilityNodeToString);
 
-//        StringBuilder cveNodeBuilder = new StringBuilder();
-//        ObjectNode testNode = objectMapper.createObjectNode();
         List<JsonNode> cveNodesList = new ArrayList<>();
 
         if(arrayNode.isArray()) {
@@ -61,39 +59,22 @@ public class JsonParser {
             }
         }
 
-        System.out.println(cveNodesList.get(1));
-
-//        System.out.println(cveNodesList);
-
-//        String cveNodeString = cveNodeBuilder.toString();
-//        System.out.println(cveNodeString);
+//        System.out.println(cveNodesList.get(1));
 
 
-//        JsonNode cveNode = objectMapper.readTree(cveNodesList);
+        JsonNode cveNodeTree;
+        JsonNode idNode;
 
-//        System.out.println(cveNode.toPrettyString());
-//
-//
-//        System.out.println(cveNode.toPrettyString());
+        // "Enhanced for loop"
+        for(JsonNode cveNode:cveNodesList) {
+//            System.out.println(cveNode);
+            String cveNodeString = cveNode.toString();
+            cveNodeTree = objectMapper.readTree(cveNodeString);
+//            System.out.println(cveNodeTree);
+            idNode = cveNodeTree.path("cve");
+            System.out.println(idNode.toPrettyString());
 
-//        List<Vulnerability> v = new ArrayList<>(Vulnerability);
-
-//        System.out.println(vulnerabilityNode);
-//
-//        JsonNode[] cveNode = new JsonNode[]{objectMapper.readTree(String.valueOf(vulnerabilityNode))};
-//
-//        cveNode[0].fieldNames();
-
-//
-//        System.out.println(cveNode[0].fieldNames());
-//        System.out.println("###############################");
-//        System.out.println(cveNode[0].toPrettyString());
-
-
-//        System.out.println(cveNode);
-
-        // Przydatne printowanie listy
-//        System.out.println(Arrays.toString(cveNode.toArray()));
+        }
 
 
     }
