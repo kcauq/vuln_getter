@@ -33,7 +33,7 @@ public class WebSecurityConfiguration{
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/vulnerabilities").permitAll()
+                        .requestMatchers("/", "/vulnerabilities", "updateVulnerabilities").permitAll()
                         .requestMatchers("/home" ).hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/admin").hasAuthority("ADMIN")
                         .anyRequest()

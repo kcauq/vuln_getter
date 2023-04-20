@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
 import com.mywebapp.Springsecuritydemo.service.VulnerabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class JsonParser {
 //    }
 
 
-    public static void webCommunication () throws IOException, InterruptedException {
+    public void webCommunication () throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -82,6 +83,12 @@ public class JsonParser {
 
         }
 
+
+
+
+    }
+
+    public Vulnerability sendVulnsToDB(){
         VulnerabilityModel vulnerabilityModel = new VulnerabilityModel();
         vulnerabilityModel.setCveId("qq");
         vulnerabilityModel.setPublishDate("11");
@@ -91,11 +98,8 @@ public class JsonParser {
         vulnerabilityModel.setBaseScore("1");
         vulnerabilityModel.setVulnerableTechnology("sdddd");
 
-    }
-    
-    public void parseJson(VulnerabilityModel vulnerabilityModel){
         Vulnerability vulnerability = vulnerabilityService.saveVulnerability(vulnerabilityModel);
-
+        return vulnerability;
     }
 
 }
