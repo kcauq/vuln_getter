@@ -84,21 +84,73 @@ public class JsonParser {
             idNode = cveNodeTree.path("cve");
             idNodesList.add(idNode);
 //            String idNodeToString = idNode.toString();
-            System.out.println(idNode.toPrettyString());
+//            System.out.println(idNode.toPrettyString());
 
         }
 
         String cveId = new String();
+        String value = new String();
+        List<JsonNode> descriptionNodesList = new ArrayList<>();
+        JsonNode zNode;
+        JsonNode cveeDataNode;
+        StringBuilder stringBuilder;
+
+
 
 
         for (JsonNode x:idNodesList) {
             cveId = x.get("id").toString();
-            System.out.println(cveId);
-            // TODO published Date
-            // TODO last Modified
-//            JsonNode xNode = objectMapper.readTree(x.toString());
-//            JsonNode descriptionNode = xNode.path("vulnerabilities");
+//            System.out.println(cveId);
+            // TODO add published Date
+            // TODO add last Modified
+            JsonNode xNode = objectMapper.readTree(x.toString());
+//            System.out.println(xNode);
+
+            JsonNode descriptionNode = xNode.path("descriptions");
 //            System.out.println(descriptionNode);
+
+            if(descriptionNode.isArray()) {
+                for(JsonNode jsonNode:descriptionNode) {
+                    descriptionNodesList.add(jsonNode);
+                }
+            }
+
+//            System.out.println(descriptionNodesList);
+            for (JsonNode v:descriptionNodesList){
+//                JsonNode vNode = objectMapper.readTree(v.toString());
+
+                value = v.get("value").toString();
+                //TODO add value
+//                System.out.println(value);
+            }
+
+            JsonNode metricsNode = xNode.path("metrics").path("cvssMetricV31");
+//            System.out.println(metricsNode.toPrettyString());
+
+            List<JsonNode> metricsNodesList = new ArrayList<>();
+
+
+            if(metricsNode.isArray()) {
+                for(JsonNode jsonNode:metricsNode) {
+                    metricsNodesList.add(jsonNode);
+                }
+            }
+
+
+            for (JsonNode z:metricsNodesList){
+                zNode = objectMapper.readTree(z.toString());
+                cveeDataNode = zNode.path("cvssData");
+
+//                System.out.println(cveeDataNode.get("vectorString"));
+//                System.out.println(cveeDataNode.get("baseScore"));
+                //TODO add vectorString
+                //TODO add baseScore
+            }
+
+            JsonNode configurationsNode = xNode.path("configurations");
+            System.out.println(configurationsNode.toPrettyString());
+
+
 
 
 
