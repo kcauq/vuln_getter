@@ -94,6 +94,10 @@ public class JsonParser {
         JsonNode zNode;
         JsonNode cveeDataNode;
         StringBuilder stringBuilder;
+        List<JsonNode> nodeNodesList = new ArrayList<>();
+        List<JsonNode> cpeMatchList = new ArrayList<>();
+        List<JsonNode> CriteriaList = new ArrayList<>();
+
 
 
 
@@ -148,7 +152,60 @@ public class JsonParser {
             }
 
             JsonNode configurationsNode = xNode.path("configurations");
-            System.out.println(configurationsNode.toPrettyString());
+//            System.out.println(configurationsNode.toPrettyString());
+
+            JsonNode nodeNode = xNode.path("configurations");
+
+            if(configurationsNode.isArray()){
+                for(JsonNode jsonNode:configurationsNode){
+                    nodeNodesList.add(jsonNode);
+                }
+            }
+
+            JsonNode cpeMatchNode;
+            JsonNode cpeMatchNodeTree;
+
+//            System.out.println(nodeNodesList);
+
+            for (JsonNode n:nodeNodesList){
+                nodeNode = n.path("nodes");
+//                System.out.println(nodeNode);
+//                cpeMatchNode = nodeNode.path("cpeMatch");
+//                System.out.println(cpeMatchNode.toPrettyString());
+
+                // linijke ponizej wcisnac gdzies indziej
+//                cpeMatchNodeTree = objectMapper.readTree(nodeNode.toString());
+
+
+//                System.out.println(cpeMatchNodeTree.toPrettyString());
+
+                if(nodeNode.isArray()){
+                    for(JsonNode jsonNode:nodeNode){
+                        cpeMatchList.add(jsonNode);
+                    }
+                }
+
+                for(JsonNode jsonNode:cpeMatchList){
+//                    cpeMatchNode = cpeMatchNodeTree.path("cpeMatch");
+                    cpeMatchNode = jsonNode.path("cpeMatch");
+//                    System.out.println(cpeMatchNode);
+                    if(cpeMatchNode.isArray()){
+//                        System.out.println(cpeMatchNode);
+                        for(JsonNode criteriaNode:cpeMatchNode){
+                            System.out.println(criteriaNode);
+
+                            CriteriaList.add(criteriaNode);
+                        }
+                    }
+
+
+                }
+
+//                System.out.println(CriteriaList);
+
+
+//                System.out.println(cpeMatchNode.toPrettyString());
+            }
 
 
 
