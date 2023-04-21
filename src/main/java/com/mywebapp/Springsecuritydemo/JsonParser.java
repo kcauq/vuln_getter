@@ -101,7 +101,7 @@ public class JsonParser {
 
 
 
-
+        
         for (JsonNode x:idNodesList) {
             cveId = x.get("id").toString();
 //            System.out.println(cveId);
@@ -192,9 +192,13 @@ public class JsonParser {
                     if(cpeMatchNode.isArray()){
 //                        System.out.println(cpeMatchNode);
                         for(JsonNode criteriaNode:cpeMatchNode){
-                            System.out.println(criteriaNode);
+//                            System.out.println(criteriaNode);
 
                             CriteriaList.add(criteriaNode);
+                            if(criteriaNode.path("vulnerable").toString().equals("true")){
+                                System.out.println(criteriaNode.path("criteria"));
+
+                            }
                         }
                     }
 
