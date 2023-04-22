@@ -53,8 +53,11 @@ public class JsonParser {
         JsonNode vulnerabilityNode = rootNode.path("vulnerabilities");
         String vulnerabilityNodeToString = vulnerabilityNode.toString();
 
+//        System.out.println(vulnerabilityNode.toPrettyString());
+
 
         ArrayNode arrayNode = (ArrayNode) objectMapper.readTree(vulnerabilityNodeToString);
+
 
         List<JsonNode> cveNodesList = new ArrayList<>();
 
@@ -71,7 +74,14 @@ public class JsonParser {
 
         JsonNode cveNodeTree;
         JsonNode idNode;
+        
+
         VulnerabilityModel vulnerabilityModel = new VulnerabilityModel();
+        List<VulnerabilityModel> listOfFinalCvs= new ArrayList<>();
+
+
+
+
         List<JsonNode> idNodesList = new ArrayList<>();
 
 
@@ -88,8 +98,16 @@ public class JsonParser {
 
         }
 
-        String cveId = new String();
-        String value = new String();
+        String cveId;
+        String published;
+        String lastModified;
+        String value;
+        String vectorString;
+        String baseScore;
+//        String criteria;
+
+        int i=0;
+
         List<JsonNode> descriptionNodesList = new ArrayList<>();
         JsonNode zNode;
         JsonNode cveeDataNode;
@@ -101,12 +119,22 @@ public class JsonParser {
 
 
 
-        
+
         for (JsonNode x:idNodesList) {
+
+            System.out.println("\nCVE " + i + "###################\n");
+            ++i;
+
             cveId = x.get("id").toString();
-//            System.out.println(cveId);
-            // TODO add published Date
-            // TODO add last Modified
+            published = x.get("published").toString();
+            lastModified = x.get("lastModified").toString();
+
+            System.out.println("cve" + cveId);
+            System.out.println("published" + published);
+            System.out.println("lastModified" + lastModified);
+
+            // TODO published Date
+            // TODO last Modified
             JsonNode xNode = objectMapper.readTree(x.toString());
 //            System.out.println(xNode);
 
@@ -124,8 +152,9 @@ public class JsonParser {
 //                JsonNode vNode = objectMapper.readTree(v.toString());
 
                 value = v.get("value").toString();
-                //TODO add value
-//                System.out.println(value);
+                System.out.println("value" + value);
+                //TODO value
+
             }
 
             JsonNode metricsNode = xNode.path("metrics").path("cvssMetricV31");
@@ -144,9 +173,11 @@ public class JsonParser {
             for (JsonNode z:metricsNodesList){
                 zNode = objectMapper.readTree(z.toString());
                 cveeDataNode = zNode.path("cvssData");
+                vectorString = cveeDataNode.get("vectorString").toString();
+                baseScore = cveeDataNode.get("baseScore").toString();
 
-//                System.out.println(cveeDataNode.get("vectorString"));
-//                System.out.println(cveeDataNode.get("baseScore"));
+                System.out.println("vectorString" + vectorString);
+                System.out.println("baseScore" + baseScore);
                 //TODO add vectorString
                 //TODO add baseScore
             }
