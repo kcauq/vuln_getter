@@ -8,6 +8,7 @@ import com.mywebapp.Springsecuritydemo.service.VulnerabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@RestController
+@Controller
 public class VulnController {
 
     @Autowired
@@ -30,17 +31,18 @@ public class VulnController {
     private Vulnerability vulnerability;
 
     @GetMapping("/vulnerabilities")
-    public String vulnerabilities()  {
+    public String vulnerabilities(Model model)  {
         List<Vulnerability> vulnerabilityList = vulnerabilityRepository.findAll(Sort.by(Sort.Direction.DESC, "baseScore"));
-        List<Vulnerability> vulnerabilitySubList = vulnerabilityList.subList(4, Math.min())
-        return vulnerabilityList.toString();
+        List<Vulnerability> vulnerabilitySubList = vulnerabilityList.subList(0, Math.min(vulnerabilityList.size(), 4));
+        model.addAttribute("vulnerabilitySubList", vulnerabilitySubList);
+        return "twentyVulnerabilities";
     }
 
-    @PostMapping("updateVulnerabilities")
+    @PostMapping("/updateVulnerabilities")
     public String updateVulnerabilities() throws IOException, InterruptedException {
 //        Vulnerability vulnerability = vulnerabilityService.saveVulnerability()
 //        Vulnerability vulnerability = jsonParser.sendVulnsToDB();
         jsonParser.webCommunication();
-        return "dane zapisane";
+        return null;
     }
 }
