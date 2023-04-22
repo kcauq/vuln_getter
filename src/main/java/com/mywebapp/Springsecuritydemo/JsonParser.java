@@ -166,6 +166,9 @@ public class JsonParser {
 
 
             for (JsonNode z:metricsNodesList){
+                while(metricsNodesList.size()>1){
+                    metricsNodesList.remove(metricsNodesList.size()-1);
+                }
                 zNode = objectMapper.readTree(z.toString());
                 cveeDataNode = zNode.path("cvssData");
                 vectorString = cveeDataNode.get("vectorString").toString();
