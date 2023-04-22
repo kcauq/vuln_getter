@@ -1,15 +1,19 @@
 package com.mywebapp.Springsecuritydemo.controller;
 
 import com.mywebapp.Springsecuritydemo.JsonParser;
+import com.mywebapp.Springsecuritydemo.VulnerabilityModel;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
+import com.mywebapp.Springsecuritydemo.repository.VulnerabilityRepository;
 import com.mywebapp.Springsecuritydemo.service.VulnerabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -20,11 +24,16 @@ public class VulnController {
     @Autowired
     private JsonParser jsonParser;
 
-    @GetMapping("/vulnerabilities")
-    public String vulnerabilities() throws IOException, InterruptedException {
-        jsonParser.webCommunication();
+    @Autowired
+    private VulnerabilityRepository vulnerabilityRepository;
+    @Autowired
+    private Vulnerability vulnerability;
 
-        return "strona dziala";
+    @GetMapping("/vulnerabilities")
+    public String vulnerabilities()  {
+        List<Vulnerability> vulnerabilityList = vulnerabilityRepository.findAll(Sort.by(Sort.Direction.DESC, "baseScore"));
+
+        return vulnerabilityList.toString();
     }
 
     @PostMapping("updateVulnerabilities")
