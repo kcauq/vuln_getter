@@ -133,6 +133,10 @@ public class JsonParser {
             System.out.println("published" + published);
             System.out.println("lastModified" + lastModified);
 
+            vulnerabilityModel.setCveId(cveId);
+            vulnerabilityModel.setPublishDate(published);
+            vulnerabilityModel.setLastModifiedDate(lastModified);
+
             // TODO published Date
             // TODO last Modified
             JsonNode xNode = objectMapper.readTree(x.toString());
@@ -149,6 +153,8 @@ public class JsonParser {
 
                 value = v.get("value").toString();
                 System.out.println("value" + value);
+                vulnerabilityModel.setDescription(value);
+
                 //TODO value
 
             }
@@ -176,6 +182,10 @@ public class JsonParser {
 
                 System.out.println("vectorString" + vectorString);
                 System.out.println("baseScore" + baseScore);
+
+                vulnerabilityModel.setVectorString(vectorString);
+                vulnerabilityModel.setBaseScore(baseScore);
+
                 //TODO add vectorString
                 //TODO add baseScore
             }
@@ -209,7 +219,10 @@ public class JsonParser {
                         for(JsonNode criteriaNode:cpeMatchNode){
 //                            CriteriaList.add(criteriaNode);
                             if(criteriaNode.path("vulnerable").toString().equals("true")){
+
                                 System.out.println(criteriaNode.path("criteria"));
+                                vulnerabilityModel.setVulnerableTechnology(criteriaNode.path("criteria").toString());
+
                                 break;
                             }
                         }
@@ -220,33 +233,21 @@ public class JsonParser {
             descriptionNodesList = new ArrayList<>();
             cpeMatchList = new ArrayList<>();
             nodeNodesList = new ArrayList<>();
-
-
-//            int descriptionNodesListSize = descriptionNodesList.size();
-//            for (int j=0; j<descriptionNodesListSize ; j++){
-//                descriptionNodesList.remove(j);
-//            }
-//            for(JsonNode jsonNode:descriptionNodesList){
-//                descriptionNodesList.remove(jsonNode);
-//                if(descriptionNodesList.isEmpty()) break;
-//
-//            }
-//            for(JsonNode jsonNode:cpeMatchList){
-//                cpeMatchList.remove(jsonNode);
-//                if(cpeMatchList.isEmpty()) break;
-//            }
+            listOfFinalCvs.add(vulnerabilityModel);
+            sendVulnsToDB(vulnerabilityModel);
         }
+//        sendVulnsToDB(listOfFinalCvs);
     }
 
-    public Vulnerability sendVulnsToDB(){
-        VulnerabilityModel vulnerabilityModel = new VulnerabilityModel();
-        vulnerabilityModel.setCveId("qq");
-        vulnerabilityModel.setPublishDate("11");
-        vulnerabilityModel.setLastModifiedDate("22");
-        vulnerabilityModel.setDescription("33");
-        vulnerabilityModel.setVectorString("fdfd");
-        vulnerabilityModel.setBaseScore("1");
-        vulnerabilityModel.setVulnerableTechnology("sdddd");
+    public Vulnerability sendVulnsToDB(VulnerabilityModel vulnerabilityModel) {
+//        VulnerabilityModel vulnerabilityModel = new VulnerabilityModel();
+//        vulnerabilityModel.setCveId("qq");
+//        vulnerabilityModel.setPublishDate("11");
+//        vulnerabilityModel.setLastModifiedDate("22");
+//        vulnerabilityModel.setDescription("33");
+//        vulnerabilityModel.setVectorString("fdfd");
+//        vulnerabilityModel.setBaseScore("1");
+//        vulnerabilityModel.setVulnerableTechnology("sdddd");
 
         Vulnerability vulnerability = vulnerabilityService.saveVulnerability(vulnerabilityModel);
         return vulnerability;

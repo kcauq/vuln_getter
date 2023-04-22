@@ -28,9 +28,10 @@ public class VulnController {
     }
 
     @PostMapping("updateVulnerabilities")
-    public String updateVulnerabilities(){
+    public String updateVulnerabilities() throws IOException, InterruptedException {
 //        Vulnerability vulnerability = vulnerabilityService.saveVulnerability()
-        Vulnerability vulnerability = jsonParser.sendVulnsToDB();
+//        Vulnerability vulnerability = jsonParser.sendVulnsToDB();
+        jsonParser.webCommunication();
         return "dane zapisane";
     }
 }
