@@ -32,7 +32,7 @@ public class VulnController {
     @GetMapping("/vulnerabilities")
     public String vulnerabilities()  {
         List<Vulnerability> vulnerabilityList = vulnerabilityRepository.findAll(Sort.by(Sort.Direction.DESC, "baseScore"));
-
+        List<Vulnerability> vulnerabilitySubList = vulnerabilityList.subList(4, Math.min())
         return vulnerabilityList.toString();
     }
 
