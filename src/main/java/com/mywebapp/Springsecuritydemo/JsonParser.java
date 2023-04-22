@@ -210,6 +210,7 @@ public class JsonParser {
 //                            CriteriaList.add(criteriaNode);
                             if(criteriaNode.path("vulnerable").toString().equals("true")){
                                 System.out.println(criteriaNode.path("criteria"));
+                                break;
                             }
                         }
                     }
