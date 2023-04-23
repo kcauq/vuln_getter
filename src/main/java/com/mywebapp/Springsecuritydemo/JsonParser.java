@@ -175,8 +175,12 @@ public class JsonParser {
             for (JsonNode v:descriptionNodesList){
 
                 value = v.get("value").toString();
+//                System.out.println("v" + v);
 //                System.out.println("value" + value);
-                vulnerabilityModel.setDescription(value);
+                if (v.get("lang").toString().equals("\"en\""))
+                {
+                    vulnerabilityModel.setDescription(value);
+                }
 
                 //TODO value
 
