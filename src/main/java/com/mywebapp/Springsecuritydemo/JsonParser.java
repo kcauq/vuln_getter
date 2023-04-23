@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
 import com.mywebapp.Springsecuritydemo.service.VulnerabilityService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -251,6 +258,22 @@ public class JsonParser {
 
         Vulnerability vulnerability = vulnerabilityService.saveVulnerability(vulnerabilityModel);
         return vulnerability;
+    }
+
+    public Date generateCurrentDate(){
+        String date = Instant.now().toString();
+        int length = 23;
+        String finishDate = StringUtils.left(date, length);
+
+        String startDate = "2023-01-01T00:00:00.000";
+
+
+
+        String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=" + startDate + "&lastModEndDate=" + finishDate;
+
+
+        System.out.println(POSTS_API_URL);
+        return null;
     }
 
 }

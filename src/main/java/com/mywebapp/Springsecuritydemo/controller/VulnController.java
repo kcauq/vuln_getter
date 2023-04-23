@@ -35,6 +35,7 @@ public class VulnController {
         List<Vulnerability> vulnerabilityList = vulnerabilityRepository.findAll(Sort.by(Sort.Direction.DESC, "baseScore"));
         List<Vulnerability> vulnerabilitySubList = vulnerabilityList.subList(0, Math.min(vulnerabilityList.size(), 4));
         model.addAttribute("vulnerabilitySubList", vulnerabilitySubList);
+        jsonParser.generateCurrentDate();
         return "twentyVulnerabilities";
     }
 
@@ -43,6 +44,7 @@ public class VulnController {
 //        Vulnerability vulnerability = vulnerabilityService.saveVulnerability()
 //        Vulnerability vulnerability = jsonParser.sendVulnsToDB();
         jsonParser.webCommunication();
-        return null;
+//        return null;
+        return "redirect:/vulnerabilities";
     }
 }
