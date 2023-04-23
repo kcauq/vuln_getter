@@ -14,6 +14,10 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+
 </head>
 <body class="bg-light">
 
@@ -35,13 +39,18 @@
         <li class="nav-item"><a class="nav-link" href="admin">Admin</a></li>
         <li class="nav-item"><a class="nav-link" href="changepass">Zmien haslo</a></li>
         <li class="nav-item"><a class="nav-link" href="vulnerabilities">20 podatnosci</a></li>
-        <li class="nav-item"><a class="nav-link" href="updateVulnerabilities">Aktualizacja bazy podatnosci</a></li>
 
       </ul>
 
     </div>
   </div>
 </nav>
+
+<div class="card-body">
+  <form action="updateVulnerabilities" method="post">
+    <button class="btn btn-primary col-md-12">Aktualizacja podatnosci</button>
+  </form>
+</div>
 
 
 
@@ -56,4 +65,17 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script src="src/main/resources/static/script.js"></script>
+
+<script type ="text/javascript">
+  $(document).ready(function () {
+    $('#example').DataTable();
+});
+</script>
+
+
 </html>

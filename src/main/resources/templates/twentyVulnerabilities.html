@@ -4,20 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <title>20 podatnosci</title>
+
+
+
 </head>
 <body>
 <section>
 
-    <table class="table table-striped">
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">CVE</th>-->
+<!--            <th scope="col">publishDate</th>-->
+<!--            <th scope="col">lastModifiedDate</th>-->
+<!--            <th scope="col">description</th>-->
+<!--            <th scope="col">vectorString</th>-->
+<!--            <th scope="col">baseScore</th>-->
+<!--            <th scope="col">vulnerableTechnology</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="vulnerability : ${vulnerabilitySubList}">-->
+<!--            <td th:text="${vulnerability.cveId}"></td>-->
+<!--            <td th:text="${vulnerability.publishDate}"></td>-->
+<!--            <td th:text="${vulnerability.lastModifiedDate}"></td>-->
+<!--            <td th:text="${vulnerability.description}"></td>-->
+<!--            <td th:text="${vulnerability.vectorString}"></td>-->
+<!--            <td th:text="${vulnerability.baseScore}"></td>-->
+<!--            <td th:text="${vulnerability.vulnerableTechnology}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+    <table id="example" class="table table-striped" style="width:100%">
         <thead>
         <tr>
-            <th scope="col">CVE</th>
-            <th scope="col">publishDate</th>
-            <th scope="col">lastModifiedDate</th>
-            <th scope="col">description</th>
-            <th scope="col">vectorString</th>
-            <th scope="col">baseScore</th>
-            <th scope="col">vulnerableTechnology</th>
+            <th>CVE</th>
+            <th>publishDate</th>
+            <th>lastModifiedDate</th>
+            <th>description</th>
+            <th>vectorString</th>
+            <th>baseScore</th>
+            <th>vulnerableTechnology</th>
         </tr>
         </thead>
         <tbody>
@@ -30,8 +58,10 @@
             <td th:text="${vulnerability.baseScore}"></td>
             <td th:text="${vulnerability.vulnerableTechnology}"></td>
         </tr>
-        </tbody>
+        </tfoot>
     </table>
+
+
 </section>
 
 
@@ -50,5 +80,14 @@
 <!--    </tbody>-->
 <!--</table>-->
 
+
+
 </body>
+
+<script type ="text/javascript">
+  $(document).ready(function () {
+    $('#example').DataTable();
+});
+</script>
+
 </html>
