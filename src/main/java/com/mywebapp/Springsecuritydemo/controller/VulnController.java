@@ -32,10 +32,9 @@ public class VulnController {
 
     @GetMapping("/vulnerabilities")
     public String vulnerabilities(Model model)  {
-        List<Vulnerability> vulnerabilityList = vulnerabilityRepository.findAll(Sort.by(Sort.Direction.DESC, "baseScore"));
-        List<Vulnerability> vulnerabilitySubList = vulnerabilityList.subList(0, Math.min(vulnerabilityList.size(), 4));
+        List<Vulnerability> vulnerabilityList = vulnerabilityRepository.findAll();
         model.addAttribute("vulnerabilitySubList", vulnerabilityList);
-        return "twentyVulnerabilities";
+        return "vulnerabilities";
     }
 
     @PostMapping("/updateVulnerabilities")
@@ -46,4 +45,13 @@ public class VulnController {
 //        return null;
         return "redirect:/vulnerabilities";
     }
+
+    @GetMapping("/twentyVulnerabilities")
+    public String twentyVulnerabilities(Model model)  {
+        List<Vulnerability> vulnerabilityList = vulnerabilityRepository.findAll(Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        List<Vulnerability> vulnerabilitySubList = vulnerabilityList.subList(0, Math.min(vulnerabilityList.size(), 20));
+        model.addAttribute("twentyVulnerabilitySubList", vulnerabilitySubList);
+        return "twentyVulnerabilities";
+    }
+
 }

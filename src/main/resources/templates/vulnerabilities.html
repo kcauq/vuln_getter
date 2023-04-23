@@ -3,7 +3,7 @@
       th:replace="base::layout(~{::section})">
 <head>
     <meta charset="UTF-8">
-    <title>20 podatnosci</title>
+    <title>wszystkie podatnosci</title>
 
 
 
@@ -11,32 +11,32 @@
 <body>
 <section>
 
-    <!--    <table class="table table-striped">-->
-    <!--        <thead>-->
-    <!--        <tr>-->
-    <!--            <th scope="col">CVE</th>-->
-    <!--            <th scope="col">publishDate</th>-->
-    <!--            <th scope="col">lastModifiedDate</th>-->
-    <!--            <th scope="col">description</th>-->
-    <!--            <th scope="col">vectorString</th>-->
-    <!--            <th scope="col">baseScore</th>-->
-    <!--            <th scope="col">vulnerableTechnology</th>-->
-    <!--        </tr>-->
-    <!--        </thead>-->
-    <!--        <tbody>-->
-    <!--        <tr th:each="vulnerability : ${vulnerabilitySubList}">-->
-    <!--            <td th:text="${vulnerability.cveId}"></td>-->
-    <!--            <td th:text="${vulnerability.publishDate}"></td>-->
-    <!--            <td th:text="${vulnerability.lastModifiedDate}"></td>-->
-    <!--            <td th:text="${vulnerability.description}"></td>-->
-    <!--            <td th:text="${vulnerability.vectorString}"></td>-->
-    <!--            <td th:text="${vulnerability.baseScore}"></td>-->
-    <!--            <td th:text="${vulnerability.vulnerableTechnology}"></td>-->
-    <!--        </tr>-->
-    <!--        </tbody>-->
-    <!--    </table>-->
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">CVE</th>-->
+<!--            <th scope="col">publishDate</th>-->
+<!--            <th scope="col">lastModifiedDate</th>-->
+<!--            <th scope="col">description</th>-->
+<!--            <th scope="col">vectorString</th>-->
+<!--            <th scope="col">baseScore</th>-->
+<!--            <th scope="col">vulnerableTechnology</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="vulnerability : ${vulnerabilitySubList}">-->
+<!--            <td th:text="${vulnerability.cveId}"></td>-->
+<!--            <td th:text="${vulnerability.publishDate}"></td>-->
+<!--            <td th:text="${vulnerability.lastModifiedDate}"></td>-->
+<!--            <td th:text="${vulnerability.description}"></td>-->
+<!--            <td th:text="${vulnerability.vectorString}"></td>-->
+<!--            <td th:text="${vulnerability.baseScore}"></td>-->
+<!--            <td th:text="${vulnerability.vulnerableTechnology}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 
-    <table id="x" class="table table-striped" style="width:100%">
+    <table id="example" class="table table-striped" style="width:100%">
         <thead>
         <tr>
             <th>CVE</th>
@@ -49,7 +49,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="vulnerability : ${twentyVulnerabilitySubList}">
+        <tr th:each="vulnerability : ${vulnerabilitySubList}">
             <td th:text="${vulnerability.cveId}"></td>
             <td th:text="${vulnerability.publishDate}"></td>
             <td th:text="${vulnerability.lastModifiedDate}"></td>
@@ -86,7 +86,7 @@
 
 <!--<script type ="text/javascript">-->
 <!--  $(document).ready(function () {-->
-<!--    $('#x').DataTable();-->
+<!--    $('#example').DataTable();-->
 <!--});-->
 <!--</script>-->
 

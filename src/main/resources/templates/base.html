@@ -38,7 +38,8 @@
                                 aria-current="page" href="home">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="admin">Admin</a></li>
         <li class="nav-item"><a class="nav-link" href="changepass">Zmien haslo</a></li>
-        <li class="nav-item"><a class="nav-link" href="vulnerabilities">20 podatnosci</a></li>
+        <li class="nav-item"><a class="nav-link" href="vulnerabilities">wszystkie podatnosci</a></li>
+        <li class="nav-item"><a class="nav-link" href="twentyVulnerabilities">20 podatnosci</a></li>
 
       </ul>
 
@@ -48,7 +49,7 @@
 
 <div class="card-body">
   <form action="updateVulnerabilities" method="post">
-    <button class="btn btn-primary col-md-12">Aktualizacja podatnosci</button>
+    <button class="btn btn-warning">Aktualizacja podatnosci</button>
   </form>
 </div>
 
@@ -74,8 +75,19 @@
 <script type ="text/javascript">
   $(document).ready(function () {
     $('#example').DataTable();
+    $('#x').DataTable({
+      paging: false,
+      searching: false
+    });
 });
 </script>
+
+
+<!--<script type ="text/javascript">-->
+<!--  $(document).ready(function () {-->
+<!--    -->
+<!--});-->
+<!--</script>-->
 
 
 </html>
