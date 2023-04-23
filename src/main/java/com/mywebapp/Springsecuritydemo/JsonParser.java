@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -136,13 +137,28 @@ public class JsonParser {
             published = x.get("published").toString();
             lastModified = x.get("lastModified").toString();
 
-            System.out.println("cve" + cveId);
-            System.out.println("published" + published);
-            System.out.println("lastModified" + lastModified);
+            String clearString1 = clearQuotes(published);
+            String clearString2 = clearQuotes(lastModified);
+
+
+
+//            System.out.println("cve" + cveId);
+//            System.out.println("published" + published);
+//            System.out.println("lastModified" + lastModified);
 
             vulnerabilityModel.setCveId(cveId);
-            vulnerabilityModel.setPublishDate(published);
-            vulnerabilityModel.setLastModifiedDate(lastModified);
+
+            String x1 = getProperTimestamp(clearString1);
+            String x2 = getProperTimestamp(clearString2);
+
+
+            Timestamp timestamp1 = Timestamp.valueOf(x1);
+            Timestamp timestamp2 = Timestamp.valueOf(x2);
+
+            System.out.println(timestamp1);
+
+            vulnerabilityModel.setPublishDate(timestamp1);
+            vulnerabilityModel.setLastModifiedDate(timestamp2);
 
             // TODO published Date
             // TODO last Modified
@@ -159,7 +175,7 @@ public class JsonParser {
             for (JsonNode v:descriptionNodesList){
 
                 value = v.get("value").toString();
-                System.out.println("value" + value);
+//                System.out.println("value" + value);
                 vulnerabilityModel.setDescription(value);
 
                 //TODO value
@@ -187,8 +203,8 @@ public class JsonParser {
                 vectorString = cveeDataNode.get("vectorString").toString();
                 baseScore = cveeDataNode.get("baseScore").toString();
 
-                System.out.println("vectorString" + vectorString);
-                System.out.println("baseScore" + baseScore);
+//                System.out.println("vectorString" + vectorString);
+//                System.out.println("baseScore" + baseScore);
 
                 vulnerabilityModel.setVectorString(vectorString);
                 vulnerabilityModel.setBaseScore(baseScore);
@@ -227,7 +243,7 @@ public class JsonParser {
 //                            CriteriaList.add(criteriaNode);
                             if(criteriaNode.path("vulnerable").toString().equals("true")){
 
-                                System.out.println(criteriaNode.path("criteria"));
+//                                System.out.println(criteriaNode.path("criteria"));
                                 vulnerabilityModel.setVulnerableTechnology(criteriaNode.path("criteria").toString());
 
                                 break;
@@ -268,6 +284,18 @@ public class JsonParser {
         String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=" + startDate + "&lastModEndDate=" + finishDate;
 //        System.out.println(POSTS_API_URL);
         return POSTS_API_URL;
+    }
+
+    public String getProperTimestamp(String dateToChange){
+        int length = 19;
+        String string1 = StringUtils.left(dateToChange, length);
+        String string2 = string1.replaceFirst("T", " ");
+        return string2;
+    }
+
+    public String clearQuotes(String string){
+        String newString = string.substring(1, string.length()-2);
+        return newString;
     }
 
 }
