@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +32,8 @@ public class WebSecurityConfiguration{
         http
                 .csrf().disable()
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/vulnerabilities", "/updateVulnerabilities", "/twentyVulnerabilities").permitAll()
-                        .requestMatchers("/home" ).hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/home", "/vulnerabilities", "/updateVulnerabilities", "/twentyVulnerabilities" ).hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/admin").hasAuthority("ADMIN")
                         .anyRequest()
                         .authenticated()
@@ -45,16 +44,11 @@ public class WebSecurityConfiguration{
                 .and()
                 .logout(log -> log
                         .logoutUrl("/logout")
-       //                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                         .clearAuthentication(true)
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .logoutSuccessUrl("/login")
                 );
-
-//                .httpBasic();
-
-
         return http.build();
     }
 }

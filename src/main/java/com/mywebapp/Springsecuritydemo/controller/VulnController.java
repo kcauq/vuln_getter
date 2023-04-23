@@ -1,7 +1,6 @@
 package com.mywebapp.Springsecuritydemo.controller;
 
 import com.mywebapp.Springsecuritydemo.JsonParser;
-import com.mywebapp.Springsecuritydemo.VulnerabilityModel;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
 import com.mywebapp.Springsecuritydemo.repository.VulnerabilityRepository;
 import com.mywebapp.Springsecuritydemo.service.VulnerabilityService;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,10 +37,7 @@ public class VulnController {
 
     @PostMapping("/updateVulnerabilities")
     public String updateVulnerabilities() throws IOException, InterruptedException {
-//        Vulnerability vulnerability = vulnerabilityService.saveVulnerability()
-//        Vulnerability vulnerability = jsonParser.sendVulnsToDB();
         jsonParser.webCommunication();
-//        return null;
         return "redirect:/vulnerabilities";
     }
 

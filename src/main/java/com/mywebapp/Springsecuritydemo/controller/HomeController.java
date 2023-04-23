@@ -29,12 +29,8 @@ public class HomeController {
     @ModelAttribute
     private void userName(Model model, Principal principal) {
         String name = principal.getName();
-        System.out.println(name);
         User user = userRepository.findByUsername(name);
-        System.out.println(user);
-
         model.addAttribute("user",user);
-        //System.out.println(model.addAttribute("user",user));
     }
 
     @GetMapping("/home")
@@ -67,22 +63,16 @@ public class HomeController {
             User updatePassword = userRepository.save(user);
 
             if(updatePassword!=null){
-                System.out.println("haslo zmienione");
                 return "redirect:/changepass?success";
 
             }else {
-                System.out.println("Cos poszlo nie tak");
                 return "redirect:/changepass?error";
 
             }
         }else {
-            System.out.println("Stare haslo nieprawidlowe");
             return "redirect:/changepass?error";
 
         }
-
-
-        //return "redirect:/changepass";
     }
 
 
