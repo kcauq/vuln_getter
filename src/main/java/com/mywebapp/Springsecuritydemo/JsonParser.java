@@ -48,7 +48,7 @@ public class JsonParser {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .header("accept", "application/json")
-                .uri(URI.create(POSTS_API_URL))
+                .uri(URI.create(generateUrl()))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -260,20 +260,14 @@ public class JsonParser {
         return vulnerability;
     }
 
-    public Date generateCurrentDate(){
+    public String generateUrl(){
         String date = Instant.now().toString();
         int length = 23;
         String finishDate = StringUtils.left(date, length);
-
-        String startDate = "2023-01-01T00:00:00.000";
-
-
-
+        String startDate = "2023-04-20T00:00:00.000";
         String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=" + startDate + "&lastModEndDate=" + finishDate;
-
-
-        System.out.println(POSTS_API_URL);
-        return null;
+//        System.out.println(POSTS_API_URL);
+        return POSTS_API_URL;
     }
 
 }
