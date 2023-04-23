@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.mywebapp.Springsecuritydemo.entity.Vulnerability;
+import com.mywebapp.Springsecuritydemo.repository.VulnerabilityRepository;
 import com.mywebapp.Springsecuritydemo.service.VulnerabilityService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -34,6 +36,9 @@ public class JsonParser {
 
     @Autowired
     private VulnerabilityService vulnerabilityService;
+
+    @Autowired
+    private VulnerabilityRepository vulnerabilityRepository;
 
 //    private static VulnerabilityRepository vulnerabilityRepository;
 
@@ -130,8 +135,8 @@ public class JsonParser {
 
         for (JsonNode x:idNodesList) {
 
-            System.out.println("\nCVE " + i + "###################\n");
-            ++i;
+//            System.out.println("\nCVE " + i + "###################\n");
+//            ++i;
 
             cveId = x.get("id").toString();
             published = x.get("published").toString();
@@ -155,7 +160,7 @@ public class JsonParser {
             Timestamp timestamp1 = Timestamp.valueOf(x1);
             Timestamp timestamp2 = Timestamp.valueOf(x2);
 
-            System.out.println(timestamp1);
+//            System.out.println(timestamp1);
 
             vulnerabilityModel.setPublishDate(timestamp1);
             vulnerabilityModel.setLastModifiedDate(timestamp2);
@@ -244,12 +249,8 @@ public class JsonParser {
                     cpeMatchNode = jsonNode.path("cpeMatch");
                     if(cpeMatchNode.isArray()){
                         for(JsonNode criteriaNode:cpeMatchNode){
-//                            CriteriaList.add(criteriaNode);
                             if(criteriaNode.path("vulnerable").toString().equals("true")){
-
-//                                System.out.println(criteriaNode.path("criteria"));
                                 vulnerabilityModel.setVulnerableTechnology(criteriaNode.path("criteria").toString());
-
                                 break;
                             }
                         }
@@ -263,19 +264,9 @@ public class JsonParser {
             listOfFinalCvs.add(vulnerabilityModel);
             sendVulnsToDB(vulnerabilityModel);
         }
-//        sendVulnsToDB(listOfFinalCvs);
     }
 
     public Vulnerability sendVulnsToDB(VulnerabilityModel vulnerabilityModel) {
-//        VulnerabilityModel vulnerabilityModel = new VulnerabilityModel();
-//        vulnerabilityModel.setCveId("qq");
-//        vulnerabilityModel.setPublishDate("11");
-//        vulnerabilityModel.setLastModifiedDate("22");
-//        vulnerabilityModel.setDescription("33");
-//        vulnerabilityModel.setVectorString("fdfd");
-//        vulnerabilityModel.setBaseScore("1");
-//        vulnerabilityModel.setVulnerableTechnology("sdddd");
-
         Vulnerability vulnerability = vulnerabilityService.saveVulnerability(vulnerabilityModel);
         return vulnerability;
     }
@@ -284,9 +275,17 @@ public class JsonParser {
         String date = Instant.now().toString();
         int length = 23;
         String finishDate = StringUtils.left(date, length);
-        String startDate = "2023-04-20T00:00:00.000";
+        String startDate;
+
+        if (getLastModifiedVulnerabilityDate() ==null){
+            startDate = "2023-04-20T00:00:00.000";
+            System.out.println("something went wrong");
+        } else {
+            startDate = getLastModifiedVulnerabilityDate();
+        }
+
         String POSTS_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0/?lastModStartDate=" + startDate + "&lastModEndDate=" + finishDate;
-//        System.out.println(POSTS_API_URL);
+        System.out.println(POSTS_API_URL);
         return POSTS_API_URL;
     }
 
@@ -302,4 +301,23 @@ public class JsonParser {
         return newString;
     }
 
+    public String getLastModifiedVulnerabilityDate() {
+        Vulnerability vulnerability = vulnerabilityRepository.findAll(Sort.by(Sort.Direction.DESC, "lastModifiedDate"))
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        if (vulnerability == null) {
+            return null;
+        }
+        else {
+            String lastModifiedDate = vulnerability.getLastModifiedDate().toString();
+
+            int length = 19;
+            String string = StringUtils.left(lastModifiedDate, length);
+            String string1 = string + ".000";
+            String string2 = string1.replaceFirst(" ", "T");
+            return string2;
+        }
+    }
 }
